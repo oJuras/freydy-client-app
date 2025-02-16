@@ -1,0 +1,1 @@
+# freydy-client-app
