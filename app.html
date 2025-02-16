@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Scanner</title>
     <link rel="icon" href="imagem_2025-02-15_161133876.png" type="image/png">
     <script src="https://cdn.jsdelivr.net/npm/jsqr"></script>
     <style>
@@ -154,7 +153,6 @@
 
     <div id="bubble-container"></div>
     <img id="logo" src="imagem_2025-02-15_161133876.png" alt="Site Logo">
-    <h1>QR Code Scanner</h1>
     <div id="video-container">
         <video id="video" playsinline></video>
         <canvas id="canvas"></canvas>
@@ -162,7 +160,7 @@
     <div id="status">Waiting for camera...</div>
 
     <footer>
-        &copy; 2025 QR Scanner. Todos os direitos reservados.
+        &copy; 2025 Fuzzy. Todos os direitos reservados.
     </footer>
 
     <script>
@@ -193,7 +191,7 @@
                     scanQRCode();
                     loadingScreen.style.display = 'none';  // Hide loading screen when video is ready
                 };
-                status.textContent = "Scanning for QR code...";
+                status.textContent = "Aguardando QR code...";
             } catch (err) {
                 status.textContent = `Error: ${err.message}`;
                 loadingScreen.style.display = 'none';  // Hide loading screen in case of error
@@ -207,12 +205,12 @@
             const qrCode = jsQR(imageData.data, canvas.width, canvas.height);
             if (qrCode) {
                 scanning = false;
-                status.textContent = `QR Code detected! Redirecting to: ${qrCode.data}`;
+                status.textContent = `Mesa Encontrada!`;
                 try {
                     const url = new URL(qrCode.data);
                     //setTimeout(() => { window.location.href = qrCode.data; }, 1000);
                 } catch (e) {
-                    status.textContent = "Invalid QR Code!";
+                    status.textContent = "QR Code Inválido!";
                     scanning = true;
                 }
             } else {
