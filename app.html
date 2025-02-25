@@ -6,7 +6,6 @@
     <link rel="icon" href="imagem_2025-02-15_161133876.png" type="image/png">
     <script src="https://cdn.jsdelivr.net/npm/jsqr"></script>
     <style>
-        /* Loading Screen Styles */
         #loading-screen {
             position: fixed;
             top: 0;
@@ -21,16 +20,14 @@
             animation: fadeIn 1s ease-out;
         }
 
-        /* Smooth fadeIn animation */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
 
-        /* Circular spinner */
         .spinner {
             border: 8px solid transparent;
-            border-top: 8px solid #ff6347; /* Tomato color */
+            border-top: 8px solid #ff6347; 
             border-radius: 50%;
             width: 80px;
             height: 80px;
@@ -42,7 +39,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Text */
         .loading-text {
             font-size: 1.5rem;
             color: #fff;
@@ -52,7 +48,6 @@
             animation-delay: 1.5s;
         }
 
-        /* Background gradient */
         #loading-screen::before {
             content: '';
             position: absolute;
@@ -65,7 +60,6 @@
             opacity: 0.8;
         }
 
-        /* Body Styles */
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
@@ -76,7 +70,7 @@
             color: white;
             text-align: center;
             overflow: hidden;
-            background: #7a1f1f;  /* Static background until everything is ready */
+            background: #7a1f1f;  
             transition: background 3s ease;
         }
 
@@ -145,7 +139,6 @@
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="spinner"></div>
         <div class="loading-text">Loading, please wait...</div>
@@ -171,7 +164,6 @@
         const loadingScreen = document.getElementById('loading-screen');
         let scanning = false;
 
-        // Lazy load the script (jsqr)
         const loadScript = () => {
             const script = document.createElement('script');
             script.src = "https://cdn.jsdelivr.net/npm/jsqr";
@@ -189,12 +181,12 @@
                     canvas.height = video.videoHeight;
                     scanning = true;
                     scanQRCode();
-                    loadingScreen.style.display = 'none';  // Hide loading screen when video is ready
+                    loadingScreen.style.display = 'none';  
                 };
                 status.textContent = "Aguardando QR code...";
             } catch (err) {
                 status.textContent = `Error: ${err.message}`;
-                loadingScreen.style.display = 'none';  // Hide loading screen in case of error
+                loadingScreen.style.display = 'none';  
             }
         }
 
@@ -234,10 +226,9 @@
 
         createBubbles();
 
-        // Static background gradient for initial page load
         setTimeout(() => {
             document.body.style.background = "linear-gradient(135deg, #7a1f1f, #4e2c23)";
-        }, 3000);  // Change after 3 seconds
+        }, 3000);  
 
     </script>
 </body>

@@ -1,37 +1,30 @@
 <?php
-// Definindo as configurações de conexão com o banco de dados
-$servername = "localhost";  // Nome do servidor do banco de dados
-$username = "root";         // Usuário do banco de dados
-$password = "usbw";         // Senha do banco de dados
-$dbname = "RestauranteDB";  // Nome do banco de dados
+$servername = "localhost";  
+$username = "root";         
+$password = "usbw";         
+$dbname = "RestauranteDB";  
 
-// Criação da conexão
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificação da conexão
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Captura dos parâmetros da URL
 $restaurante = isset($_GET['R']) ? $_GET['R'] : null;
 
-// Validação do parâmetro 'R'
 if ($restaurante === null) {
     echo "Parâmetro 'R' é obrigatório na URL.";
     exit;
 }
 
-// Consulta com Prepared Statement para o nome do restaurante
 $stmt_restaurante = $conn->prepare("SELECT nome FROM Restaurantes WHERE id_restaurante = ?");
-$stmt_restaurante->bind_param("i", $restaurante);  // "i" para inteiro (id_restaurante)
+$stmt_restaurante->bind_param("i", $restaurante);  
 $stmt_restaurante->execute();
 $result_restaurante = $stmt_restaurante->get_result();
 $restaurante_nome = $result_restaurante->fetch_assoc()['nome'];
 
-// Consulta com Prepared Statement para o Cardápio
 $stmt_cardapio = $conn->prepare("SELECT nome_item, descricao, preco, id_item FROM Cardapios WHERE id_restaurante = ?");
-$stmt_cardapio->bind_param("i", $restaurante);  // "i" para inteiro (id_restaurante)
+$stmt_cardapio->bind_param("i", $restaurante);  
 $stmt_cardapio->execute();
 $result_cardapio = $stmt_cardapio->get_result();
 
@@ -44,7 +37,6 @@ if ($result_cardapio->num_rows > 0) {
     echo "Nenhum item de cardápio encontrado para o restaurante '$restaurante_nome'.";
 }
 
-// Fechar a conexão
 $stmt_restaurante->close();
 $stmt_cardapio->close();
 $conn->close();
@@ -99,7 +91,7 @@ $conn->close();
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999;  /* Garantir que o menu hamburger fique sobre os outros elementos */
+            z-index: 9999;  
         }
 
         .menu-hamburger span {
@@ -191,7 +183,7 @@ $conn->close();
         }
 
         .menu-carrinho.open {
-            display: block; /* Torna o menu visível */
+            display: block; 
             transform: translateX(0);
         }
 
@@ -304,7 +296,6 @@ $conn->close();
         <div class="fechar" onclick="toggleMenu()">×</div>
         <h3>Itens no Carrinho</h3>
         <ul id="carrinho-lista">
-            <!-- Itens do carrinho serão listados aqui -->
         </ul>
         <p><strong>Total: R$ <span id="total"></span></strong></p>
         <button class="limpar-carrinho" onclick="limparCarrinho()">Limpar Carrinho</button>
@@ -319,9 +310,9 @@ $conn->close();
             carrinho.push({ id: idItem, nome: nomeItem, preco: preco });
             localStorage.setItem('carrinho', JSON.stringify(carrinho));
             atualizarCarrinho();
-            atualizarTotal();  // Atualiza o total após adicionar um item
+            atualizarTotal();
             if (!document.getElementById('menu-carrinho').classList.contains('open')) {
-                toggleMenu();  // Abre o carrinho, se não estiver aberto
+                toggleMenu(); 
             }
         }
 

@@ -1,26 +1,20 @@
 <?php
-// Conexão com o banco de dados
-$servername = "localhost"; // ou o endereço do seu servidor
-$username = "root"; // seu nome de usuário do banco
-$password = "usbw"; // sua senha do banco (caso tenha)
-$dbname = "RestauranteDB"; // nome do banco de dados
+$servername = "localhost"; 
+$username = "root"; 
+$password = "usbw"; 
+$dbname = "RestauranteDB"; 
 
-// Cria a conexão
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verifica a conexão
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
-// Verifica se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Recebe os dados do formulário
     $cpf = $_POST['cpf'];
     $telefone = $_POST['telefone'];
     $nome = $_POST['nome'];
 
-    // Verifica se o CPF já está cadastrado
     $stmt = $conn->prepare("SELECT * FROM Usuarios WHERE cpf = ?");
     $stmt->bind_param("s", $cpf);
     $stmt->execute();
@@ -29,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {
         echo "<p>Erro: O CPF já está cadastrado.</p>";
     } else {
-        // Verifica se o telefone já está cadastrado
         $stmt = $conn->prepare("SELECT * FROM Usuarios WHERE telefone = ?");
         $stmt->bind_param("s", $telefone);
         $stmt->execute();
@@ -38,25 +31,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($result->num_rows > 0) {
             echo "<p>Erro: O telefone já está cadastrado.</p>";
         } else {
-            // Se CPF e telefone não existirem, insere o novo usuário
             $stmt = $conn->prepare("INSERT INTO Usuarios (cpf, telefone, nome) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $cpf, $telefone, $nome);
 
             if ($stmt->execute()) {
-                // Redireciona para a página de login após cadastro bem-sucedido
                 header('Location: login.php');
-                exit(); // Certifique-se de chamar exit após o header para interromper a execução do script
+                exit(); 
             } else {
                 echo "<p>Erro ao cadastrar usuário: " . $stmt->error . "</p>";
             }
         }
     }
 
-    // Fecha a declaração
     $stmt->close();
 }
 
-// Fecha a conexão
 $conn->close();
 ?>
 
@@ -67,7 +56,6 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Usuário</title>
     <style>
-        /* Gradiente dinâmico de fundo */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -77,7 +65,6 @@ $conn->close();
             animation: gradientAnimation 10s ease infinite;
         }
 
-        /* Animação do gradiente dinâmico */
         @keyframes gradientAnimation {
             0% {
                 background-position: 0% 50%;
