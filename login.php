@@ -1,41 +1,33 @@
 <?php
-// Conexão com o banco de dados
-$servername = "localhost"; // ou o endereço do seu servidor
-$username = "root"; // seu nome de usuário do banco
-$password = "usbw"; // sua senha do banco (caso tenha)
-$dbname = "RestauranteDB"; // nome do banco de dados
+$servername = "localhost";
+$username = "root"; 
+$password = "usbw"; 
+$dbname = "RestauranteDB"; 
 
-// Cria a conexão
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verifica a conexão
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Recebe o CPF do formulário
     $cpf = $_POST['cpf'];
 
-    // Consulta o banco de dados para verificar se o CPF existe
     $stmt = $conn->prepare("SELECT * FROM Usuarios WHERE cpf = ?");
     $stmt->bind_param("s", $cpf);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // CPF encontrado, redireciona para a página de boas-vindas ou dashboard
-        header('Location: app.html');  // Redireciona para a página de dashboard
+        header('Location: app.html');  
         exit();
     } else {
         echo "<p>Usuário não encontrado com esse CPF.</p>";
     }
 
-    // Fecha a declaração
     $stmt->close();
 }
 
-// Fecha a conexão
 $conn->close();
 ?>
 
